@@ -1,6 +1,8 @@
 PiFox
 =====
 
+Video of the game in action: https://www.youtube.com/watch?v=-5n9IxSQH1M
+
 Bare Metal 3D rail shooter game
 
 * 5800 lines of ARM assembly (ARMv6 + VFP1)
