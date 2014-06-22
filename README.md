@@ -3,6 +3,8 @@ PiFox
 
 Video of the game in action: https://www.youtube.com/watch?v=-5n9IxSQH1M
 
+Developed as an extension to a first year group project at Imperial College London.
+
 Bare Metal 3D rail shooter game
 
 * 5800 lines of ARM assembly (ARMv6 + VFP1)
@@ -57,6 +59,27 @@ Wiring the controller
 ![NES Pinout](https://raw.github.com/ICTeam28/PiFox/master/assets/nes-controller-pinout.png)
 
 ![Raspberry PI Pinout](https://raw.github.com/ICTeam28/PiFox/master/assets/raspbery-pi-pinout.png)
+
+
+Authors
+-------
+Nandor Licker
+- [Email](nandor.licker13@imperial.ac.uk)
+- Github [@nandor](https://github.com/nandor)
+
+Ilija Radosavovic
+- [Email](ilija.radosavovic13@imperial.ac.uk)
+- Github [@ir413](https://github.com/ir413)
+
+David Avedissian
+- [Email](david.avedissian13@imperial.ac.uk)
+- Github [@davedissian](https://github.com/davedissian)
+- Twitter [@davedissian](https://twitter.com/davedissian)
+
+Nic Prettejohn
+- [Email](nicolas.prettejohn13@imperial.ac.uk)
+- Github [@nkp](https://github.com/nkp)
+- Twitter [@thisisnkp](https://twitter.com/thisisnkp)
 
 Special thanks
 --------------
