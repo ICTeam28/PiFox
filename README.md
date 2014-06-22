@@ -17,6 +17,14 @@ Bare Metal 3D rail shooter game
 * GitHub: https://github.com/ICTeam28/PiFox
 * Emulator: https://github.com/ICTeam28/PiEmu
 
+Dependencies
+-----
+
+Using your favourite Linux package manager, install:
+
+* arm-none-eabi-binutils
+* cmake
+
 Build
 -----
 
