@@ -34,10 +34,15 @@ GNU as syntax.
     mkdir build
     cmake ..
     make
+    
+Emulation
+-----
 
-PiEmu can run the game without sound. A qemu branch can be used to emulate 
-the game at a higher framerate, but sound must be disabled.
-(https://github.com/Torlus/qemu/tree/rpi)
+PiEmu (https://github.com/ICTeam28/PiEmu) can run the game without sound. Assuming PiFox and PiEmu have been cloned in the same directory and both are built, PiEmu must be invoked with the following command:
+
+    ../../PiEmu/build/piemu --graphics --quiet --memory=256M --addr=65536 --nes kernel.img 
+
+A qemu branch can be used to emulate the game at a higher framerate, but sound must be disabled. (https://github.com/Torlus/qemu/tree/rpi)
 
 config.txt
 ----------
