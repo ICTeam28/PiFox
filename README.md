@@ -38,7 +38,7 @@ GNU as syntax.
 Emulation
 -----
 
-PiEmu (https://github.com/ICTeam28/PiEmu) can run the game without sound. Assuming PiFox and PiEmu have been cloned in the same directory and both are built, PiEmu must be invoked with the following command:
+PiEmu (https://github.com/ICTeam28/PiEmu) can run the game without sound. Assuming PiFox and PiEmu have been cloned in the same directory and both are built, PiEmu must be invoked with the following command inside PiFox's build directory:
 
     ../../PiEmu/build/piemu --graphics --quiet --memory=256M --addr=65536 --nes kernel.img 
 
