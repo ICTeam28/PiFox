@@ -32,6 +32,7 @@ The project uses CMake and requires an ARM assembler supporting
 GNU as syntax. 
 
     mkdir build
+    cd build
     cmake ..
     make
     
