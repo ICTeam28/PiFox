@@ -74,24 +74,23 @@ Wiring the controller
 
 ![Raspberry PI Pinout](https://raw.github.com/ICTeam28/PiFox/master/assets/raspbery-pi-pinout.png)
 
-
 Authors
 -------
 Nandor Licker
-- [Email](<mailto:nandor.licker13@imperial.ac.uk>)
+- Email: nandor.licker13[at]imperial.ac.uk
 - Github [@nandor](https://github.com/nandor)
 
 Ilija Radosavovic
-- [Email](<mailto:ilija.radosavovic13@imperial.ac.uk>)
+- Email: ilija.radosavovic13[at]imperial.ac.uk
 - Github [@ir413](https://github.com/ir413)
 
 David Avedissian
-- [Email](<mailto:david.avedissian13@imperial.ac.uk>)
+- Email: david.avedissian13[at]imperial.ac.uk
 - Github [@davedissian](https://github.com/davedissian)
 - Twitter [@davedissian](https://twitter.com/davedissian)
 
 Nic Prettejohn
-- [Email](<mailto:nicolas.prettejohn13@imperial.ac.uk>)
+- Email: nicolas.prettejohn13[at]imperial.ac.uk
 - Github [@nkp](https://github.com/nkp)
 - Twitter [@thisisnkp](https://twitter.com/thisisnkp)
 
