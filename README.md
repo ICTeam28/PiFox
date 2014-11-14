@@ -99,3 +99,6 @@ Special thanks
 
 * https://github.com/dwelch67/raspberrypi
 * https://github.com/PeterLemon/RaspberryPi
+
+
+Special thanks to chpatrick (Patrick Chilton) for his advice.
