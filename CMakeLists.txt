@@ -2,7 +2,11 @@
 # Licensing information can be found in the LICENSE file
 # (C) 2014 The Team 28 Authors. All rights reserved.
 cmake_minimum_required(VERSION 2.8)
-project(PiFox)
+project(PiFox ASM)
+
+# Find the python interpreter
+set( PythonInterp_FIND_VERSION 2 )
+find_package( PythonInterp REQUIRED )
 
 set(SOURCES
   kernel.s
@@ -37,25 +41,10 @@ SET(IMAGES
   pifox.png
 )
 
-set(ASFLAGS -march=armv6zk -mfpu=vfp -g --fatal-warnings)
-
-# Determine toolchain
-execute_process(COMMAND which arm-none-eabi-as OUTPUT_VARIABLE NONE_EABI_EXISTS)
-execute_process(COMMAND which arm-linux-gnueabihf-as OUTPUT_VARIABLE LINUX_GNUEABIHF_EXISTS)
-execute_process(COMMAND which arm-bcm2708-linux-gnueabi-as OUTPUT_VARIABLE BCM2708_LINUX_GNUEABI_EXISTS)
-if(NONE_EABI_EXISTS STREQUAL "")
-  if(LINUX_GNUEABIHF_EXISTS STREQUAL "")
-    if(BCM2708_LINUX_GNUEABI_EXISTS STREQUAL "")
-      set(TOOLCHAIN arm-linux-gnueabi)
-    else()
-      set(TOOLCHAIN arm-bcm2708-linux-gnueabi)
-    endif()
-  else()
-    set(TOOLCHAIN arm-linux-gnueabihf)
-  endif()
-else()
-  set(TOOLCHAIN arm-none-eabi)
-endif()
+set( CMAKE_EXECUTABLE_SUFFIX .elf )
+set( CMAKE_ASM_FLAGS "-march=armv6zk -mfpu=vfp -g -Wa,--fatal-warnings -nostartfiles -nostdlib" )
+set( CMAKE_EXE_LINKER_FLAGS "-Wl,-T,${PROJECT_SOURCE_DIR}/kernel.ld" )
+include_directories( ${CMAKE_CURRENT_SOURCE_DIR} )
 
 # Compile all images
 foreach(file ${IMAGES})
@@ -71,51 +60,20 @@ foreach(file ${IMAGES})
   add_custom_command(
     OUTPUT ${object}
     DEPENDS ${source}
-    COMMAND ${CMAKE_SOURCE_DIR}/imager.py ${source} --out=${object}
+    COMMAND ${PYTHON_EXECUTABLE} ${CMAKE_SOURCE_DIR}/imager.py ${source} --out=${object}
   )
 
   list(APPEND IMAGES_BIN ${object})
 endforeach(file)
 
-# Compile all sources
-foreach(file ${SOURCES})
-  get_filename_component(file_path ${file} PATH)
-  get_filename_component(file_name ${file} NAME_WE)
-
-  set(file "${file_name}")
-  set(object "${CMAKE_BINARY_DIR}/${file_path}/${file_name}.o")
-  set(source "${CMAKE_SOURCE_DIR}/${file_path}/${file_name}.s")
-  get_filename_component(dir ${object} PATH)
-
-  file(MAKE_DIRECTORY ${dir})
-  add_custom_command(
-    OUTPUT ${object}
-    DEPENDS ${source} ${IMAGES_BIN} ${MAPS_BIN}
-    COMMAND ${TOOLCHAIN}-as
-      ${ASFLAGS} ${source} -o ${object}
-      -I${CMAKE_SOURCE_DIR}/
-  )
-
-  list(APPEND OBJECTS ${object})
-endforeach(file)
-
-# Kernel elf file
-set(KERNEL_ELF ${CMAKE_BINARY_DIR}/kernel.elf)
-set(KERNEL_LD ${CMAKE_SOURCE_DIR}/kernel.ld)
-set(KERNEL_BIN ${CMAKE_BINARY_DIR}/kernel.img)
-
 # Build a binary file out of the elf
-add_custom_target(
-  kernel ALL
-  DEPENDS ${KERNEL_ELF}
-  COMMAND ${TOOLCHAIN}-objcopy
-    -O binary ${KERNEL_ELF} ${KERNEL_BIN}
-)
+add_executable( kernel ${SOURCES} ${IMAGES_BIN} )
 
-# Link objects into an elf file
+# Without an operating system, there is no executable loader, so we just need
+# the raw machine code (or binary) from the ELF output of the toolchain.
+# objcopy can do that for us.
 add_custom_command(
-  OUTPUT ${KERNEL_ELF}
-  DEPENDS ${OBJECTS} ${KERNEL_LD}
-  COMMAND ${TOOLCHAIN}-ld
-    -T ${KERNEL_LD} ${OBJECTS} -o ${KERNEL_ELF}
-)
+    TARGET kernel POST_BUILD
+    COMMAND ${CMAKE_OBJCOPY} ${CMAKE_BINARY_DIR}/kernel.elf -O binary ./kernel.img
+    WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+    COMMENT "Convert the ELF output file to a binary image" )
